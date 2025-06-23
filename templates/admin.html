@@ -1,0 +1,123 @@
+{% extends 'template.html' %}
+
+{% block title %}Admin Panel - Instagram Auto Reply{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='template.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="panel-header d-flex justify-content-between align-items-center shadow-sm">
+        <div>
+            <h3 class="mb-1">🛠️ Admin Panel</h3>
+            <small class="text-white-50">Login sebagai: <strong>{{ session.username }}</strong></small>
+        </div>
+        <div class="top-actions">
+            <a href="/add_user" class="btn btn-outline-light btn-sm">➕ Tambah Client</a>
+            <a href="/add_login_user" class="btn btn-outline-light btn-sm">➕ Tambah Akun Login</a>
+            <a href="/logout" class="btn btn-danger btn-sm">🚪 Logout</a>
+        </div>
+    </div>
+
+    {% if users %}
+    <div class="mb-2 text-white-50">
+        Total Client Terdaftar: <strong>{{ users|length }}</strong>
+    </div>
+
+    <div class="mb-3">
+        <input type="text" id="searchInput" class="form-control" placeholder="🔎 Cari nama perusahaan, IG ID, dll...">
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-sm table-hover table-striped table-bordered w-100 align-middle">
+            <thead class="table-dark text-center">
+                <tr>
+                    <th class="sticky">NO</th>
+                    <th class="sticky">IG ID</th>
+                    <th class="sticky">Nama Perusahaan</th>
+                    <th class="sticky">Token</th>
+                    <th class="sticky">Status Token</th>
+                    <th class="sticky">Expires At</th>
+                    <th class="sticky">Bisnis</th>
+                    <th class="sticky">Joined</th>
+                    <th class="sticky">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in users %}
+                <tr>
+                    <td class="text-center">{{ loop.index }}</td>
+                    <td class="text-center">{{ u.ig_id }}</td>
+                    <td>{{ u.client_name or '-' }}</td>
+                    <td>
+                        <div class="d-flex align-items-center gap-1">
+                            <span class="token-text" data-bs-toggle="tooltip" title="{{ u.token }}">{{ u.token[:30] }}...</span>
+                            <button class="btn btn-sm btn-outline-secondary copy-btn" data-token="{{ u.token }}" data-bs-toggle="tooltip" title="Salin Token">📋</button>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        {% if u.token_status == 'Active' %}
+                            <span class="badge bg-success">🟢 Active</span>
+                        {% elif u.token_status == 'Expired' %}
+                            <span class="badge bg-danger">🔴 Expired</span>
+                        {% else %}
+                            <span class="badge bg-warning text-dark">⚠️ Error</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-center">{{ u.expire_str or '-' }}</td>
+                    <td>{{ u.business_type or '-' }}</td>
+                    <td class="text-center">
+                        <span class="joined-time" data-utc="{{ u.joined }}">{{ u.joined or '-' }}</span>
+                    </td>
+                    <td class="text-center">
+                        <div class="d-flex justify-content-center gap-1">
+                            <a href="/edit/{{ u.ig_id }}" class="btn btn-sm btn-outline-warning rounded-circle" data-bs-toggle="tooltip" title="Edit User">✏️</a>
+                            <a href="/detail/{{ u.ig_id }}" class="btn btn-sm btn-outline-info rounded-circle" data-bs-toggle="tooltip" title="Lihat Detail">📋</a>
+                            <a href="{{ url_for('delete_user', ig_id=u.ig_id) }}" class="btn btn-sm btn-outline-danger rounded-circle" onclick="return confirm('Yakin ingin menghapus user ini?')" data-bs-toggle="tooltip" title="Hapus User">🗑️</a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-warning text-center mt-4">
+        Tidak ada data client yang tersedia.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='template.js') }}"></script>
+<script>
+    // Konversi waktu UTC ke lokal
+    document.querySelectorAll(".joined-time").forEach(el => {
+        const utc = el.getAttribute("data-utc");
+        if (utc) {
+            const local = new Date(utc + "Z");
+            el.textContent = local.toLocaleString();
+        }
+    });
+
+    // Copy token ke clipboard
+    document.querySelectorAll(".copy-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            navigator.clipboard.writeText(btn.getAttribute("data-token"));
+            alert("✅ Token berhasil disalin!");
+        });
+    });
+
+    // Filter pencarian
+    document.getElementById('searchInput').addEventListener('keyup', function () {
+        const search = this.value.toLowerCase();
+        document.querySelectorAll("tbody tr").forEach(row => {
+            row.style.display = [...row.cells].some(td =>
+                td.textContent.toLowerCase().includes(search)
+            ) ? '' : 'none';
+        });
+    });
+</script>
+{% endblock %}

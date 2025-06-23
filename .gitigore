@@ -1,0 +1,21 @@
+# ❌ Jangan upload variabel rahasia
+.env
+
+# 📦 Virtual environment (jangan ikut di-push)
+venv/
+env/
+
+# 🧠 Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# 🖥️ VS Code settings
+.vscode/
+
+# 🍏 MacOS system file
+.DS_Store
+
+# 📑 Google Sheet token file (jika ada)
+credentials.json
+token.json

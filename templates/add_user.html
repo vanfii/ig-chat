@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tambah User</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .form-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <div class="form-section">
+        <h3 class="mb-4 text-primary">➕ Tambah User Instagram</h3>
+        <form method="POST" onsubmit="return validateKeywords()">
+            <div class="mb-3">
+                <label for="ig_id" class="form-label">IG ID</label>
+                <input type="text" class="form-control" id="ig_id" name="ig_id" required>
+            </div>
+            <div class="mb-3">
+                <label for="client_name" class="form-label">Nama Perusahaan</label>
+                <input type="text" class="form-control" id="client_name" name="client_name" required>
+            </div>
+            <div class="mb-3">
+                <label for="token" class="form-label">Token Instagram</label>
+                <textarea class="form-control" id="token" name="token" rows="3" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="business_type" class="form-label">Jenis Bisnis</label>
+                <select class="form-select" id="business_type" name="business_type" required>
+                    <option value="">-- Pilih Jenis Bisnis --</option>
+                    <option value="kuliner">Kuliner</option>
+                    <option value="fitness">Fitness</option>
+                    <option value="villa">Villa</option>
+                    <option value="loundry">Loundry</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="trigger_keywords" class="form-label">Kata Kunci Trigger <small class="text-muted">(pisahkan dengan koma)</small></label>
+                <input type="text" class="form-control" id="trigger_keywords" name="trigger_keywords" placeholder="pesan, order, beli" required>
+            </div>
+            <div class="mb-3">
+                <label for="stop_keywords" class="form-label">Kata Kunci Stop <small class="text-muted">(pisahkan dengan koma)</small></label>
+                <input type="text" class="form-control" id="stop_keywords" name="stop_keywords" placeholder="tidak, cukup, berhenti" required>
+            </div>
+            <div class="d-flex justify-content-between">
+                <a href="/admin" class="btn btn-secondary">↩️ Kembali</a>
+                <button type="submit" class="btn btn-primary">💾 Simpan</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function validateKeywords() {
+    const trigger = document.getElementById('trigger_keywords').value;
+    const stop = document.getElementById('stop_keywords').value;
+
+    if (!trigger.trim() || !stop.trim()) {
+        alert('Pastikan kolom kata kunci tidak kosong!');
+        return false;
+    }
+
+    return true;
+}
+</script>
+</body>
+</html>
+

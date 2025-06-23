@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Token Berhasil Didapat</title>
+</head>
+<body>
+    <h2>✅ Short-lived Access Token Berhasil Didapat</h2>
+    <p><strong>User ID:</strong> {{ user_id }}</p>
+    <p><strong>Access Token:</strong> <code>{{ token }}</code></p>
+
+    <form action="/long_token" method="get">
+        <input type="hidden" name="access_token" value="{{ token }}">
+        <button type="submit">🔄 Rubah ke Long-Lived Token</button>
+    </form>
+</body>
+</html>

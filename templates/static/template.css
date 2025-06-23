@@ -1,0 +1,118 @@
+body {
+            background-color: #f0f2f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .panel-header {
+            background: linear-gradient(90deg, #0d6efd, #3c8dbc);
+            color: white;
+            padding: 1.2rem;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .panel-header h3 {
+            margin: 0;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .top-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .top-actions a {
+            color: #0d6efd;
+            background: white;
+            border: 1px solid #0d6efd;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.2s ease-in-out;
+            font-weight: 500;
+        }
+
+        .top-actions a:hover {
+            background-color: #0d6efd;
+            color: white;
+        }
+
+        .table th {
+            text-align: center;
+        }
+
+        .table td {
+            vertical-align: middle;
+        }
+
+        .token-text {
+            font-family: monospace;
+            font-size: 0.85rem;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            padding: 5px 8px;
+        }
+
+        .joined-time::before {
+            content: "🕒 ";
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: #f1f9ff;
+        }
+
+        .table th.sticky {
+            position: sticky;
+            top: 0;
+            background-color: #343a40;
+            color: white;
+            z-index: 10;
+        }
+.token-text {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: inline-block;
+        max-width: 200px;
+        vertical-align: middle;
+    }
+    .table-hover tbody tr:hover {
+        background-color: #f5f5f5;
+        cursor: pointer;
+    }
+    .panel-header {
+        background-color: #343a40;
+        padding: 15px;
+        border-radius: 8px;
+        color: white;
+        margin-bottom: 20px;
+    }
+    .top-actions a {
+        margin-left: 10px;
+    }
+    .token-text {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: inline-block;
+        max-width: 200px;
+        vertical-align: middle;
+    }
+    .table-hover tbody tr:hover {
+        background-color: #f5f5f5;
+        cursor: pointer;
+    }
+    .panel-header {
+        background-color: #343a40;
+        padding: 15px;
+        border-radius: 8px;
+        color: white;
+        margin-bottom: 20px;
+    }
+    .top-actions a {
+        margin-left: 10px;
+    }
