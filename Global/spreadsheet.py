@@ -2,17 +2,21 @@ from datetime import datetime
 from google.oauth2.service_account import Credentials
 from googleapiclient.discovery import build
 from .config import get_spreadsheet_id_by_ig_id
-
+import os
 def get_sheet(spreadsheet_id):
     SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
-    creds = Credentials.from_service_account_file("botdm-462416-15efc7a29a2a.json", scopes=SCOPES)
+    creds = Credentials.from_service_account_file(
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"], scopes=SCOPES
+    )
     service = build("sheets", "v4", credentials=creds)
     sheet = service.spreadsheets()
     return sheet, spreadsheet_id
 
 def count_orders_from_sheet(spreadsheet_id):
     SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
-    creds = Credentials.from_service_account_file("botdm-462416-15efc7a29a2a.json", scopes=SCOPES)
+    creds = Credentials.from_service_account_file(
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"], scopes=SCOPES
+    )
     service = build("sheets", "v4", credentials=creds)
 
     # 1. Ambil nama sheet pertama

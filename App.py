@@ -9,7 +9,16 @@ from datetime import datetime,timezone
 from Global.spreadsheet import count_orders_from_sheet
 import logging
 from werkzeug.security import generate_password_hash, check_password_hash
+import os
+import base64
 
+if "GOOGLE_CREDENTIALS_B64" in os.environ:
+    cred_path = "Global/decoded_gcloud.json"
+    os.makedirs(os.path.dirname(cred_path), exist_ok=True)
+    with open(cred_path, "wb") as f:
+        f.write(base64.b64decode(os.environ["GOOGLE_CREDENTIALS_B64"]))
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = cred_path
+    
 logging.basicConfig(
     level=logging.INFO,  # Ganti jadi DEBUG kalau mau lihat semua
     format="%(asctime)s [%(levelname)s] %(message)s"
